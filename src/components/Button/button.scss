@@ -1,0 +1,21 @@
+.btn {
+  @apply flex items-center justify-center gap-1 text-medium border-[1px] border-solid rounded-md px-3 py-1;
+  &.btn-primary {
+    @apply bg-primary text-white border-primary transition duration-300;
+    &:hover {
+      @apply bg-primary-dark border-primary-dark;
+    }
+  }
+  &.btn-secondary {
+    @apply bg-secondary text-white border-secondary transition duration-300;
+    &:hover {
+      @apply bg-secondary-dark border-secondary-dark;
+    }
+  }
+  &:disabled {
+    @apply bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed;
+    &:hover {
+      @apply bg-gray-300 border-gray-300;
+    }
+  }
+}
