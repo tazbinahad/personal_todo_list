@@ -29,9 +29,11 @@ This is a Todo List application built with React and TypeScript.
 ```sh
 yarn install
 yarn start
+```
 
+2. Project Structure
 
-Project Structure
+```sh
 .gitignore
 .vscode/
     settings.json
