@@ -2,6 +2,8 @@
 
 This is a Todo List application built with React, TypeScript, and Tailwind CSS.
 
+Detail View: [To Do List](https://todo-list-woad-chi.vercel.app/)
+
 ## Project Structure
 
 - `src/App.tsx`: The main entry point for the application.
