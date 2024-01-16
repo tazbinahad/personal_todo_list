@@ -1,41 +1,74 @@
-# Getting Started with Create React App
+# Todo List Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a Todo List application built with React and TypeScript.
 
-## Available Scripts
+## Project Structure
 
-In the project directory, you can run:
+- `src/App.tsx`: The main entry point for the application.
+- `src/index.tsx`: The root component of the application.
+- `src/components/`: Contains reusable components like `Button` and `Modal`.
+- `src/icons/`: Contains SVG icons used in the application.
+- `src/modules/TodoList/`: Contains the main logic for the Todo List feature.
+  - `CreateTodo/`: Contains the logic for creating new todos.
+  - `Task/`: Contains the logic for individual tasks in the Todo List.
+  - `index.tsx`: Contains the main TodoList component.
+- `src/types/`: Contains TypeScript type definitions used in the application.
+- `src/utils/`: Contains utility functions and constants.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Add new tasks with a unique ID and title.
+- Edit existing tasks.
+- Delete tasks.
+- Filter tasks by status and priority.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## How to Run
 
-### `npm run build`
+1. Install dependencies:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+yarn install
+yarn start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Project Structure
+.gitignore
+.vscode/
+    settings.json
+    tailwind.json
+package.json
+public/
+    index.html
+    manifest.json
+    robots.txt
+README.md
+src/
+    App.tsx
+    components/
+        Button/
+            button.scss
+            index.tsx
+        Modal/
+            index.tsx
+    icons/
+        Cross.tsx
+        Edit.tsx
+        Filter.tsx
+        Plus.tsx
+        Trash.tsx
+    index.css
+    index.tsx
+    modules/
+        TodoList/
+            CreateTodo/
+                index.tsx
+            Task/
+                index.tsx
+            index.tsx
+    types/
+        index.ts
+    utils/
+        index.ts
+tailwind.config.js
+tsconfig.json
+```

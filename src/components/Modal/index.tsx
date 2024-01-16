@@ -10,13 +10,26 @@ export const Modal: React.FC<TModal> = ({
   width,
   onClose,
 }) => {
+  // Apply 'overflow: hidden' to the body when the modal opens
+  React.useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Clean up function to remove the style when the component unmounts
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
   return open ? (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="flex justify-center p-10 overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div
-          className={`relative w-auto my-6 mx-auto max-w-3xl`}
+          className={`relative w-[520px] mx-auto max-md:w-[calc(100vw-45px)] mt-20`}
           style={{
-            width: width || "auto",
+            width: width,
           }}
         >
           {/*content*/}

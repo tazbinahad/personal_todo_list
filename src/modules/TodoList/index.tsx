@@ -1,45 +1,76 @@
 import { Button, Modal } from "components";
-import { Edit, Filter, PlusIcon, Trash } from "icons";
-import { useState } from "react";
+import { PlusIcon } from "icons";
+import { useEffect, useState } from "react";
 import { TTask } from "types";
-import { taskList } from "utils";
+import { priorityList } from "utils";
 import CreateTodo from "./CreateTodo";
+import Task from "./Task";
 
 const TodoList = () => {
   // States
-  const [task, setTask] = useState(taskList);
+  const [task, setTask] = useState<TTask[]>([]);
   const [open, setOpen] = useState(false);
   const [singleTask, setSingleTask] = useState<TTask>();
+  const [selectedPriority, setSelectedPriority] = useState<string>("All");
 
-  // Functions
+  // Effect to load tasks from localStorage on initial render
+  useEffect(() => {
+    const tasks = localStorage.getItem("tasks");
+    if (tasks) {
+      setTask(JSON.parse(tasks));
+    }
+  }, []);
+
+  // Effect to save tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(task));
+  }, [task]);
+
+  // Function to remove a task
   const removeTask = (taskId: number) => {
-    // Remove the task from the state
     const updatedTask = task.filter((task) => task.id !== taskId);
     setTask(updatedTask);
   };
 
-  const onSave = (taskInfo: TTask) => {
-    // Check if the task is being edited
-    if (taskInfo.id) {
-      const getTaskIndex = task.findIndex((task) => task.id === taskInfo.id);
-      const updatedTask = [...task];
-      updatedTask[getTaskIndex] = taskInfo;
-      setTask(updatedTask);
-      setSingleTask(undefined);
-      setOpen(false);
-      return;
-    }
-    // Check if the task is being created
-    // Get the last task's ID
-    const lastTask = task[task.length - 1];
-    const lastId = lastTask ? lastTask.id : 0;
-    // Create a new task with a new ID
-    const taskWithNewId = { ...taskInfo, id: lastId + 1 };
+  // Function to edit a task
+  const editTask = (task: TTask) => {
+    setSingleTask(task);
+    setOpen(true);
+  };
 
-    // Add the new task to the state
-    setTask([...task, taskWithNewId]);
+  // Function to update a task
+  const updateTask = (taskInfo: TTask) => {
+    const updatedTasks = task.map((t) => (t.id === taskInfo.id ? taskInfo : t));
+    setTask(updatedTasks);
+  };
+
+  // Function to create a task
+  const createTask = (taskInfo: TTask) => {
+    const lastId = task.length > 0 ? Math.max(...task.map((t) => t.id)) : 0;
+    const taskWithNewId = { ...taskInfo, id: lastId + 1 };
+    setTask((prevTasks) => [...prevTasks, taskWithNewId]);
+  };
+
+  // Function to update priority
+  const upatePriority = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPriority(e.target.value);
+  };
+
+  // Function to save a task
+  const onSave = (taskInfo: TTask) => {
+    if (taskInfo.id) {
+      updateTask(taskInfo);
+    } else {
+      createTask(taskInfo);
+    }
+    setSingleTask(undefined);
     setOpen(false);
   };
+
+  // Filter tasks based on priority
+  const filteredTasks = task.filter(
+    (task) => selectedPriority === "All" || task.priority === selectedPriority
+  );
   return (
     <>
       <div className="container">
@@ -56,64 +87,44 @@ const TodoList = () => {
               setOpen(true);
             }}
           />
-          <Button type="secondary" content="Filters" icon={<Filter />} />
+          <select
+            className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary transition-shadow  duration-300"
+            value={selectedPriority}
+            onChange={upatePriority}
+          >
+            {["All", ...priorityList].map((priority) => (
+              <option key={priority} value={priority}>
+                {priority}
+              </option>
+            ))}
+          </select>
         </div>
         {/* <============Task List ============> */}
         <div className="flex flex-col gap-3">
-          {task.length === 0 && (
+          {filteredTasks.length === 0 ? (
             <div className="flex flex-col justify-center items-center gap-2 p-3 border rounded-lg">
               <h3 className="text-medium font-bold text-secondary">
-                No Task Found
+                {selectedPriority === "All"
+                  ? "No Task Found"
+                  : `No ${selectedPriority} Priority Task Found`}
               </h3>
               <p className="text-small text-secondary">
                 Click on "New Task" to add new task
               </p>
             </div>
+          ) : (
+            filteredTasks.map((task) => (
+              <Task
+                key={task.id}
+                task={task}
+                editTask={editTask}
+                removeTask={removeTask}
+              />
+            ))
           )}
-          {task.map((task) => (
-            <div
-              className="flex flex-col justify-between items-center p-3 border rounded-lg sm:flex-row"
-              key={task.id}
-            >
-              {/* Task Details */}
-              <div className="flex flex-col items-center gap-1 sm:items-start">
-                <h3 className="text-medium font-bold text-secondary">
-                  {task.title}
-                </h3>
-                <div className="flex gap-2">
-                  {/* Priority */}
-                  <p className="flex items-center gap-2 font-semibold text-small">
-                    <span>Priority:</span>
-                    <span className="text-red-500">{task.priority}</span>
-                  </p>
-                  {/* Status */}|
-                  <p className="flex items-center gap-2 font-semibold text-small">
-                    <span>Status:</span>
-                    <span className="text-red-500">{task.status}</span>
-                  </p>
-                </div>
-              </div>
-              {/* Action Icons */}
-              <div className="flex items-center gap-4 text-red-500 ">
-                <Edit
-                  className="cursor-pointer fill-secondary hover:fill-secondary-dark transition-all duration-300"
-                  onClick={() => {
-                    setSingleTask(task);
-                    setOpen(true);
-                  }}
-                />
-                <Trash
-                  className="cursor-pointer fill-red-500 hover:fill-red-600 transition-all duration-300"
-                  onClick={() => {
-                    removeTask(task.id);
-                  }}
-                />
-              </div>
-            </div>
-          ))}
         </div>
       </div>
-      {/* Modal */}
+      {/* Task Create/Edit Modal */}
       <Modal
         open={open}
         title={singleTask ? "Edit Task" : "Create New Task"}
@@ -129,7 +140,6 @@ const TodoList = () => {
           setOpen(false);
           setSingleTask(undefined);
         }}
-        width={"30%"}
       />
     </>
   );
