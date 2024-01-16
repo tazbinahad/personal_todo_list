@@ -22,7 +22,7 @@ This is a Todo List application built with React, TypeScript, and Tailwind CSS.
 - Edit existing tasks.
 - Delete tasks.
 - Mark tasks as completed.
-- Filter tasks by status and priority.
+- Filter tasks by priority.
 - Tasks are stored in local storage, so they persist across browser sessions.
 
 ## How to Run
