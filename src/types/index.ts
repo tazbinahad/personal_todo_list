@@ -15,6 +15,7 @@ export type TTask = {
   title: string;
   priority: TPriority;
   status: TTaskEvent;
+  completed: boolean;
 };
 
 // Type: Modal

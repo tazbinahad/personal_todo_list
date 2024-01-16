@@ -2,13 +2,13 @@ import { Button, Modal } from "components";
 import { PlusIcon } from "icons";
 import { useEffect, useState } from "react";
 import { TTask } from "types";
-import { priorityList } from "utils";
+import { dummyTask, priorityList } from "utils";
 import CreateTodo from "./CreateTodo";
 import Task from "./Task";
 
 const TodoList = () => {
   // States
-  const [task, setTask] = useState<TTask[]>([]);
+  const [task, setTask] = useState<TTask[]>(dummyTask);
   const [open, setOpen] = useState(false);
   const [singleTask, setSingleTask] = useState<TTask>();
   const [selectedPriority, setSelectedPriority] = useState<string>("All");
@@ -50,6 +50,13 @@ const TodoList = () => {
     const taskWithNewId = { ...taskInfo, id: lastId + 1 };
     setTask((prevTasks) => [...prevTasks, taskWithNewId]);
   };
+  // Function to mark a task as completed
+  const taskCompleted = (taskId: number) => {
+    const updatedTasks = task.map((task) =>
+      task.id === taskId ? { ...task, completed: true } : task
+    );
+    setTask(updatedTasks);
+  };
 
   // Function to update priority
   const upatePriority = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,6 +78,7 @@ const TodoList = () => {
   const filteredTasks = task.filter(
     (task) => selectedPriority === "All" || task.priority === selectedPriority
   );
+  console.log(task)
   return (
     <>
       <div className="container">
@@ -119,6 +127,7 @@ const TodoList = () => {
                 task={task}
                 editTask={editTask}
                 removeTask={removeTask}
+                taskCompleted={taskCompleted}
               />
             ))
           )}

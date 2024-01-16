@@ -20,6 +20,7 @@ const CreateTodo: React.FC<TCreateTodo> = ({
     title: "",
     priority: "Low",
     status: "To Do",
+    completed: false,
   });
 
   const updatePriority = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -47,7 +48,9 @@ const CreateTodo: React.FC<TCreateTodo> = ({
           placeholder="Write your task here!"
           value={taskInfo.title}
           onChange={(e) => {
-            const value = e.target.value.replace(/^\s+/g, '').replace(/\s\s+/g, ' ');
+            const value = e.target.value
+              .replace(/^\s+/g, "")
+              .replace(/\s\s+/g, " ");
 
             setTaskInfo({ ...taskInfo, title: value });
           }}

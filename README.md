@@ -1,6 +1,6 @@
 # Todo List Application
 
-This is a Todo List application built with React and TypeScript.
+This is a Todo List application built with React, TypeScript, and Tailwind CSS.
 
 ## Project Structure
 
@@ -10,7 +10,7 @@ This is a Todo List application built with React and TypeScript.
 - `src/icons/`: Contains SVG icons used in the application.
 - `src/modules/TodoList/`: Contains the main logic for the Todo List feature.
   - `CreateTodo/`: Contains the logic for creating new todos.
-  - `Task/`: Contains the logic for individual tasks in the Todo List.
+  - `Task/`: Contains the logic for individual tasks in the Todo List, including marking tasks as completed.
   - `index.tsx`: Contains the main TodoList component.
 - `src/types/`: Contains TypeScript type definitions used in the application.
 - `src/utils/`: Contains utility functions and constants.
@@ -20,6 +20,7 @@ This is a Todo List application built with React and TypeScript.
 - Add new tasks with a unique ID and title.
 - Edit existing tasks.
 - Delete tasks.
+- Mark tasks as completed.
 - Filter tasks by status and priority.
 
 ## How to Run
