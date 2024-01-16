@@ -14,6 +14,7 @@ This is a Todo List application built with React, TypeScript, and Tailwind CSS.
   - `index.tsx`: Contains the main TodoList component.
 - `src/types/`: Contains TypeScript type definitions used in the application.
 - `src/utils/`: Contains utility functions and constants.
+- `tailwind.config.js`: Contains the configuration for Tailwind CSS.
 
 ## Features
 
@@ -22,6 +23,7 @@ This is a Todo List application built with React, TypeScript, and Tailwind CSS.
 - Delete tasks.
 - Mark tasks as completed.
 - Filter tasks by status and priority.
+- Tasks are stored in local storage, so they persist across browser sessions.
 
 ## How to Run
 
